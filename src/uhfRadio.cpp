@@ -18,13 +18,13 @@
 /**
  * converts frequency string and channel string to UHF-Radio data format
  */
-int convert(uint16_t pBuffer[2], char *pFreq, char *pChan) {
+int32_t convert(uint16_t pBuffer[2], uint8_t *pFreq, uint8_t *pChan) {
 
-  if (strlen(pFreq) != 6)
+  if (strlen((char*)pFreq) != 6)
   {
     return -1;
   }
-  if (strlen(pChan) != 2)
+  if (strlen((char*)pChan) != 2)
   {
     return -1;
   }
@@ -42,7 +42,7 @@ int convert(uint16_t pBuffer[2], char *pFreq, char *pChan) {
   {
     pBuffer[1] |= 0x0020;
   }
-  pBuffer[1] |= atoi(pChan) & 0x001F;
+  pBuffer[1] |= atoi((char*)pChan) & 0x001F;
 
   return 0;
 }
@@ -50,7 +50,7 @@ int convert(uint16_t pBuffer[2], char *pFreq, char *pChan) {
 /**
  * converts frequency string and channel string to UHF-Radio data format
  */
-int convert(uint16_t pBuffer[2], uint32_t pFreq, uint32_t pChan) {
+int32_t convert(uint16_t pBuffer[2], uint32_t pFreq, uint32_t pChan) {
   uint8_t dig1;
   uint8_t dig2;
   uint8_t dig3;

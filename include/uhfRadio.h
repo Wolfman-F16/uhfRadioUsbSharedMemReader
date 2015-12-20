@@ -19,7 +19,7 @@
 
 #define USB_DATA_TX 							0x0d
 
-int convert(uint16_t buffer[2], char *freq, char *chan);
-int convert(uint16_t pBuffer[2], uint32_t pFreq, uint32_t pChan);
+int32_t convert(uint16_t buffer[2], char *freq, char *chan);
+int32_t convert(uint16_t pBuffer[2], uint32_t pFreq, uint32_t pChan);
 
 #endif /* UHFRADIO_H_ */

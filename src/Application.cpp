@@ -36,7 +36,7 @@ CApplication::~CApplication() {
  \retVal true if successful
  */
 BOOL CApplication::InitInstance() {
-  int error = ERROR_DATA;
+  uint32_t error = ERROR_DATA;
   // init memory access
   m_pFalconSMR = new FalconSMR;
 

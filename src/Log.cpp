@@ -150,7 +150,7 @@ gets time stamp.
 string Log::getTimeStamp()
 {
   string sTime;
-  char cBuffer[80];
+  uint8_t cBuffer[80];
   struct tm * timeData;
   time_t strTime;
 

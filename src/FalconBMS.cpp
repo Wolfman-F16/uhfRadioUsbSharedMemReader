@@ -55,9 +55,9 @@ HANDLE FalconSMR::createBms(void)
 inits a file mapping. opens it and maps it to view.
 \return error code
 */
-int FalconSMR::initBms (void)
+uint32_t FalconSMR::initBms (void)
 {
-  int errVal = ERROR_OK;
+  uint32_t errVal = ERROR_OK;
   
   BmsFlightDataMap = OpenFileMapping(FILE_MAP_READ, true, BMS_MAP_NAME);
 
@@ -88,7 +88,7 @@ int FalconSMR::initBms (void)
 destroys file mapping
 \return error code
 */
-int FalconSMR::destroyBms (void)
+uint32_t FalconSMR::destroyBms (void)
 {
   if (hFlightDataBms) {
 	  CloseHandle(hFlightDataBms);

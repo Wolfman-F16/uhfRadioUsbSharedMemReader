@@ -19,9 +19,9 @@ CAppSerial::~CAppSerial() {
   }
 }
 
-int CAppSerial::setup() {
-  int bResult = -1;
-  char charBuffer[50];
+bool CAppSerial::setup() {
+  int32_t bResult = -1;
+  uint8_t charBuffer[50];
   // init logging
   Log::getInstance()->setFilter(DEBUG_LEVEL);
   Log::getInstance()->setLogger("f4.uhf-radio.log.txt");
@@ -31,16 +31,16 @@ int CAppSerial::setup() {
   if (!devUhfRadio) {
     Log::getInstance()->error("Failed to open USB device\n");
     Log::getInstance()->info("Note: UHF Radio uses VendorId 0x16C0 and ProductId 0x27DB\ninstall-filter install --device=USB\Vid_16c0.Pid_27db.Rev_0100\n");
-    return FALSE;
+    return false;
   } else {
     printf("Established connection to UHF-Radio\n");
   }
 
-  return TRUE;
+  return true;
 }
 
-int CAppSerial::sendData(const uint32_t freq, uint32_t chan) {
-  int iRetVal = -1;
+int32_t CAppSerial::sendData(const uint32_t freq, uint32_t chan) {
+  int32_t iRetVal = -1;
   uint16_t value[2];
 
   if(devUhfRadio) {

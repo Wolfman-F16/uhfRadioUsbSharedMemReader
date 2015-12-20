@@ -17,7 +17,7 @@
 // global variables
 CApplication m_pAppFalcon;
 CAppSerial m_pAppSerial;
-unsigned int TIMEOUT_VALUE = 20; // init refresh rate [ms]
+uint32_t TIMEOUT_VALUE = 20; // init refresh rate [ms]
 
 /**
  writes data to serial data buffer (cData)
@@ -55,8 +55,8 @@ int txData() {
 /*
  * main
  */
-int main(int argc, char **argv) {
-  int retVal;
+uint32_t main(uint32_t argc, uint8_t **argv) {
+  uint32_t retVal;
 
   printf(
       "Falcon 4.0 / BMS 4.33 Shared Memory Reader\n\rARC-164 UHF Radio - %s %s\n\r",

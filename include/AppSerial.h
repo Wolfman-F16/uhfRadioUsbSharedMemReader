@@ -21,8 +21,8 @@ public:
   CAppSerial();
   virtual ~CAppSerial();
 
-  int setup();
-  int sendData(uint32_t , uint32_t );
+  bool setup();
+  int32_t sendData(uint32_t , uint32_t );
 
 private:
   usb_dev_handle *devUhfRadio = 0;

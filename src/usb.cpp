@@ -12,13 +12,14 @@
 #include "usb.h"
 
 /* Used to get descriptor strings for device identification */
-static int usbGetDescriptorString(usb_dev_handle *pDevice,
-		int pIdx,
-		int pLangId,
-		char *pBuffer,
-		int pBuflen) {
-	char buffer[256];
-	int rval, i;
+static int32_t usbGetDescriptorString(usb_dev_handle *pDevice,
+		uint32_t pIdx,
+		int32_t pLangId,
+		uint8_t *pBuffer,
+		uint32_t pBuflen) {
+	uint8_t buffer[256];
+	int32_t rval;
+	uint32_t i;
 
 	// make standard request GET_DESCRIPTOR, type string and given index
 	// (e.g. dev->iProduct)
@@ -28,7 +29,7 @@ static int usbGetDescriptorString(usb_dev_handle *pDevice,
 				USB_REQ_GET_DESCRIPTOR,
 				(USB_DT_STRING << 8) + pIdx,
 				pLangId,
-				buffer,
+				(char*)buffer,
 				sizeof(buffer),
 				1000);
 
@@ -36,8 +37,8 @@ static int usbGetDescriptorString(usb_dev_handle *pDevice,
 		return rval;
 
 	// rval should be bytes read, but buffer[0] contains the actual response size
-	if ((unsigned char) buffer[0] < rval)
-		rval = (unsigned char) buffer[0]; // string is shorter than bytes read
+	if ((uint8_t) buffer[0] < rval)
+		rval = (uint8_t) buffer[0]; // string is shorter than bytes read
 
 	if (buffer[1] != USB_DT_STRING) // second byte is the data type
 		return 0; // invalid return type
@@ -62,12 +63,12 @@ static int usbGetDescriptorString(usb_dev_handle *pDevice,
  * opens usb device. device handle must be closed after finishing operation!
  */
 usb_dev_handle* USB_OpenDevice(uint16_t pVendorId, uint16_t pProductId, std::string pProductName) {
-	int result;
+	int32_t result;
 	struct usb_bus *bus = 0;
 	struct usb_device *dev = 0;
 	usb_dev_handle *device = 0;
 
-	char buffer[64];
+	uint8_t buffer[64];
 
 	usb_init();
 #if _DEBUG_
@@ -107,7 +108,7 @@ usb_dev_handle* USB_OpenDevice(uint16_t pVendorId, uint16_t pProductId, std::str
 				device = usb_open(dev);
 				usbGetDescriptorString(device, dev->descriptor.iProduct, ENGLISH, buffer, sizeof(buffer));
 				printf("Product name:\t%s\n", buffer );
-				if (strncmp(pProductName.c_str(), buffer, sizeof(buffer)) == 0) {
+				if (strncmp(pProductName.c_str(), (char*)buffer, sizeof(buffer)) == 0) {
 					return device;
 				} else {
 					usb_close(device);
@@ -123,9 +124,9 @@ usb_dev_handle* USB_OpenDevice(uint16_t pVendorId, uint16_t pProductId, std::str
 /**
  * sends data via usb. Max 4Byte
  */
-int USB_SendData(usb_dev_handle *pDevice, uint8_t pRequest, uint16_t pValue[2]) {
+uint32_t USB_SendData(usb_dev_handle *pDevice, uint8_t pRequest, uint16_t pValue[2]) {
 	int32_t r;
-	char buffer[16];
+	uint8_t buffer[16];
 
 	r = usb_control_msg(
 			pDevice,
@@ -133,7 +134,7 @@ int USB_SendData(usb_dev_handle *pDevice, uint8_t pRequest, uint16_t pValue[2]) 
 				pRequest,
 				pValue[0],
 				pValue[1],
-				buffer,
+				(char*)buffer,
 				sizeof(buffer),
 				5000);
 	if (r < 0) {
@@ -147,7 +148,7 @@ int USB_SendData(usb_dev_handle *pDevice, uint8_t pRequest, uint16_t pValue[2]) 
 /**
  * sends data via usb. Data must be null terminated!
  */
-int USB_SendLargeData(usb_dev_handle *pDevice, uint8_t pRequest, char *pBuffer) {
+uint32_t USB_SendLargeData(usb_dev_handle *pDevice, uint8_t pRequest, uint8_t *pBuffer) {
 	int32_t r;
 
 	r = usb_control_msg(
@@ -156,7 +157,7 @@ int USB_SendLargeData(usb_dev_handle *pDevice, uint8_t pRequest, char *pBuffer) 
 				pRequest,
 				0,
 				0,
-				pBuffer,
+				(char*)pBuffer,
 				sizeof(pBuffer)+1,
 				5000);
 	if (r < 0) {

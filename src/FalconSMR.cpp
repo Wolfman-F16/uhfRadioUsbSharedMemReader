@@ -72,8 +72,8 @@ HANDLE FalconSMR::createF4(void) {
  inits a file mapping. opens it and maps it to view.
  \return error code
  */
-int FalconSMR::initF4(void) {
-  int errVal = ERROR_OK;
+uint32_t FalconSMR::initF4(void) {
+  uint32_t errVal = ERROR_OK;
 
   FlightDataMap = OpenFileMapping(FILE_MAP_READ, true, MAP_NAME);
 
@@ -123,7 +123,7 @@ int FalconSMR::initF4(void) {
  destroys file mapping
  \return error code
  */
-int FalconSMR::destroyF4(void) {
+uint32_t FalconSMR::destroyF4(void) {
   if (hFlightData) {
     try {
       CloseHandle(hFlightData);
@@ -145,7 +145,7 @@ int FalconSMR::destroyF4(void) {
  *
  * Wait for Falcon 4.0 to start if necessary.
  */
-int FalconSMR::sync() {
+int32_t FalconSMR::sync() {
   // create mapping
   Log::getInstance()->debug("create shared memory mapping...\n");
   if (createF4() == NULL) {
