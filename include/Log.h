@@ -17,6 +17,7 @@
 
 #include <time.h>
 #include <cstdio>
+#include <inttypes.h>
 
 using namespace std;
 

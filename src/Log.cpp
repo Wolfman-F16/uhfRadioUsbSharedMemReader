@@ -156,9 +156,9 @@ string Log::getTimeStamp()
 
   time(&strTime);                       // get time
   timeData = localtime(&strTime);
-  strftime(cBuffer, 80, "%d.%m.%Y %H:%M:%S", timeData);   // format time
+  strftime((char*)cBuffer, 80, "%d.%m.%Y %H:%M:%S", timeData);   // format time
 
-  sTime = cBuffer;
+  sTime = (char*)cBuffer;
 
   //getTime(&currentTime);
   return sTime;

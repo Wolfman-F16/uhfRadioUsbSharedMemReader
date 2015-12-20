@@ -37,9 +37,11 @@ public:
   /// methods
   int32_t	sync();
 
+  uint32_t	getFalconVersion();
+
   // BMS additional data
-  int   getBupUhfFreq();
-  int   getBupUhfChan();
+  uint32_t  getBupUhfFreq();
+  uint32_t	getBupUhfChan();
 
 private:
   /// members

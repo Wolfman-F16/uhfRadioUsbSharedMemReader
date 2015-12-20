@@ -25,7 +25,7 @@ public:
   int32_t sendData(uint32_t , uint32_t );
 
 private:
-  usb_dev_handle *devUhfRadio = 0;
+  usb_dev_handle *devUhfRadio;
 
 };
 

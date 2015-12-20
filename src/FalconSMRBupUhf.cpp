@@ -16,19 +16,19 @@ clarity's sake
 
 
 /// return Backup UHF Frequency
-int FalconSMR::getBupUhfFreq()
+uint32_t FalconSMR::getBupUhfFreq()
 {
 	return flightDataBms->BupUhfFreq;
 }
 
 /// return Backup UHF Channel
-int FalconSMR::getBupUhfChan()
+uint32_t FalconSMR::getBupUhfChan()
 {
 	return flightDataBms->BupUhfPreset;
 }
 
 /// returns falcon version
-int FalconSMR::getFalconVersion()
+uint32_t FalconSMR::getFalconVersion()
 {
   if(flightDataF4) {
     return flightDataF4->iFalconVersion;

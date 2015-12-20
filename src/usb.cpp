@@ -48,7 +48,7 @@ static int32_t usbGetDescriptorString(usb_dev_handle *pDevice,
 	rval /= 2;
 
 	/* lossy conversion to ISO Latin1 */
-	for (i = 1; i < rval && i < pBuflen; i++) {
+	for (i = 1; i < (uint8_t)rval && i < pBuflen; i++) {
 		if (buffer[2 * i + 1] == 0)
 			pBuffer[i - 1] = buffer[2 * i];
 		else

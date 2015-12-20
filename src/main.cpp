@@ -22,7 +22,7 @@ uint32_t TIMEOUT_VALUE = 20; // init refresh rate [ms]
 /**
  writes data to serial data buffer (cData)
  */
-int txData() {
+uint32_t txData() {
   uint32_t errorCode = ERROR_NO_NEW_DATA;
   static uint32_t chan = 33;
   static uint32_t freq = 1;
@@ -55,7 +55,7 @@ int txData() {
 /*
  * main
  */
-uint32_t main(uint32_t argc, uint8_t **argv) {
+int main(int argc, char **argv) {
   uint32_t retVal;
 
   printf(

@@ -34,7 +34,6 @@ protected:
 
 private:
   // members
-  const uint16_t FREQ_4HZ = 125;
   bool  bSingleShotFlag;
 };
 
