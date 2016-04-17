@@ -37,16 +37,11 @@ bool CAppSerial::setup() {
   return true;
 }
 
-int32_t CAppSerial::sendData(const uint32_t freq, uint32_t chan) {
+int32_t CAppSerial::sendData(uint16_t value[2]) {
   int32_t iRetVal = -1;
-  uint16_t value[2];
 
   if(devUhfRadio) {
-    if(convert(value, freq, chan)) {
-      Log::getInstance()->error("converting input data failed\n");
-    } else {
       iRetVal = USB_SendData(devUhfRadio,USB_DATA_TX, value);
-    }
   }
   return iRetVal;
 }

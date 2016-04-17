@@ -19,6 +19,9 @@ CApplication m_pAppFalcon;
 CAppSerial m_pAppSerial;
 uint32_t TIMEOUT_VALUE = 20; // init refresh rate [ms]
 
+extern uint8_t readLogbookFrequencies(void);
+extern uint8_t sendUhfPresetFrequencies(CAppSerial *pAppSerial);
+
 /**
  writes data to serial data buffer (cData)
  */
@@ -27,6 +30,7 @@ uint32_t txData() {
   static uint32_t chan = 33;
   static uint32_t freq = 1;
   uint8_t dirtyFlag = 0;
+  uint16_t value[2];
 
   if (chan != m_pAppFalcon.m_pFalconSMR->getBupUhfChan())
   {
@@ -40,7 +44,11 @@ uint32_t txData() {
   }
   if (dirtyFlag)
   {
-    errorCode = m_pAppSerial.sendData(freq, chan);
+	    if(convert(value, freq, chan)) {
+	      Log::getInstance()->error("converting input data failed\n");
+	    } else {
+	      errorCode = m_pAppSerial.sendData(value);
+	    }
     if (errorCode != ERROR_OK)
     {
       return errorCode;
@@ -70,7 +78,7 @@ int main(int argc, char **argv) {
     Log::getInstance()->error("could not find Pilot Logbook\n");
     printf("no pilot logbook found\n");
   }
-
+  sendUhfPresetFrequencies(&m_pAppSerial);
   if (m_pAppFalcon.InitInstance() != TRUE)
   {
     Log::getInstance()->debug("could not initialize application\n");

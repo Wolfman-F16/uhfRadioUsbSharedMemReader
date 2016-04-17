@@ -22,7 +22,7 @@ public:
   virtual ~CAppSerial();
 
   bool setup();
-  int32_t sendData(uint32_t , uint32_t );
+  int32_t sendData(uint16_t value[2] );
 
 private:
   usb_dev_handle *devUhfRadio;
