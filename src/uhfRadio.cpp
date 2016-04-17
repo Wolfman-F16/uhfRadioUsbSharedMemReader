@@ -48,7 +48,7 @@ int32_t convert(uint16_t pBuffer[2], uint8_t *pFreq, uint8_t *pChan) {
 }
 
 /**
- * converts frequency string and channel string to UHF-Radio data format
+ * converts frequency number and channel number to UHF-Radio data format
  */
 int32_t convert(uint16_t pBuffer[2], uint32_t pFreq, uint32_t pChan) {
   uint8_t dig1;

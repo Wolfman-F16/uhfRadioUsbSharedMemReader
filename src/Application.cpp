@@ -43,7 +43,7 @@ BOOL CApplication::InitInstance() {
   if (m_pFalconSMR->sync() != ERROR_OK) {
 
     while (error != ERROR_OK) {
-      Log::getInstance()->debug("trying again...\n");
+      Log::getInstance()->debug("trying again in 5 sec ...\n");
 
       Sleep(5000); // wait 5 seconds before next try
       error = m_pFalconSMR->sync();

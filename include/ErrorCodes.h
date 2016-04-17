@@ -27,3 +27,6 @@
 #ifndef ERROR_POWER_OFF
 #define ERROR_POWER_OFF           111
 #endif
+#ifndef ERROR_INVALID_PARAMETER
+#define ERROR_INVALID_PARAMETER   87
+#endif

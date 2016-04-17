@@ -66,6 +66,11 @@ int main(int argc, char **argv) {
     Log::getInstance()->error("setup failed. USB device not found.\n");
     return ERROR_CONFIG;
   }
+  if(readLogbookFrequencies()) {
+    Log::getInstance()->error("could not find Pilot Logbook\n");
+    printf("no pilot logbook found\n");
+  }
+
   if (m_pAppFalcon.InitInstance() != TRUE)
   {
     Log::getInstance()->debug("could not initialize application\n");
