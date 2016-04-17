@@ -19,7 +19,7 @@ CApplication m_pAppFalcon;
 CAppSerial m_pAppSerial;
 uint32_t TIMEOUT_VALUE = 20; // init refresh rate [ms]
 
-extern uint8_t readLogbookFrequencies(void);
+extern uint8_t readLogbookFrequencies(char*);
 extern uint8_t sendUhfPresetFrequencies(CAppSerial *pAppSerial);
 
 /**
@@ -74,11 +74,15 @@ int main(int argc, char **argv) {
     Log::getInstance()->error("setup failed. USB device not found.\n");
     return ERROR_CONFIG;
   }
-  if(readLogbookFrequencies()) {
-    Log::getInstance()->error("could not find Pilot Logbook\n");
-    printf("no pilot logbook found\n");
+  if (argc != 2) {
+    printf("no path to pilot.ini provided");
+  } else {
+    if(readLogbookFrequencies(argv[1])) {
+      Log::getInstance()->debug("unable to read UHF Preset frequencies\n");
+    } else {
+      sendUhfPresetFrequencies(&m_pAppSerial);
+    }
   }
-  sendUhfPresetFrequencies(&m_pAppSerial);
   if (m_pAppFalcon.InitInstance() != TRUE)
   {
     Log::getInstance()->debug("could not initialize application\n");

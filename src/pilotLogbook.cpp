@@ -21,17 +21,23 @@ const std::string m_sKey = "[Radio]";
 
 uint32_t uhfPresetFrequencies[UHF_CHANNELS];
 
-
-uint8_t readLogbookFrequencies() {
+/*
+ * reads Pilot ini file
+ */
+uint8_t readLogbookFrequencies(char *pFilePath) {
   std::fstream pFile;
   char *pLineBuffer = new char[BUFFER_SZ];
   uint8_t uhfChannel = 0;
 
   /* get filepath */
+  if(pFilePath == 0) {
+    pFilePath = m_sFileName.c_str();
+    Log::getInstance()->info("No pilot.ini provided as command line parameter\ne.g.uhfRadio d:\\BMS\\User\\Config\\Viper.ini\n");
+  }
   // ask command line argument
-  printf("Reading %s\n",m_sFileName.c_str());
+  printf("Reading %s\n",pFilePath);
   /* open file */
-  pFile.open(m_sFileName.c_str(), std::fstream::in);
+  pFile.open(pFilePath, std::fstream::in);
   if(pFile.is_open()) {
     std::string sString;
     while(pFile.good()) {
@@ -39,7 +45,6 @@ uint8_t readLogbookFrequencies() {
       sString = pLineBuffer;
       if(sString.find(m_sKey) == 0) {
         /* read uhf frequencies */
-    	  printf("found frequency section\n");
         while((uhfChannel < 20) && pFile.good()) {
           pFile.getline(pLineBuffer, BUFFER_SZ-1);
           sString = pLineBuffer;
@@ -54,6 +59,7 @@ uint8_t readLogbookFrequencies() {
 #endif
     }
   } else {
+    Log::getInstance()->error("failed to open file");
     delete pLineBuffer;
     return ERROR_FILE_NOT_FOUND;
   }
@@ -63,6 +69,10 @@ uint8_t readLogbookFrequencies() {
   return ERROR_OK;
 }
 
+/*
+ * sends UHF Preset frequencies to UHF Radio
+ *
+ */
 uint32_t sendUhfPresetFrequencies(CAppSerial *pAppSerial) {
   uint32_t uhfChannel;
   uint32_t iRetVal = ERROR_OK;
@@ -79,8 +89,9 @@ uint32_t sendUhfPresetFrequencies(CAppSerial *pAppSerial) {
 	    } else {
 	      value[1] |= 0xEE00;
 	      iRetVal = pAppSerial->sendData(value);
+	      printf("%d\t", iRetVal);
 	    }
-
+	    sleep(1);
   }
 
   return iRetVal;
