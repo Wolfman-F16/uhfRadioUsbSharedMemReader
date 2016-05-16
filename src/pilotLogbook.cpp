@@ -31,8 +31,8 @@ uint8_t readLogbookFrequencies(char *pFilePath) {
 
   /* get filepath */
   if(pFilePath == 0) {
-    pFilePath = m_sFileName.c_str();
-    Log::getInstance()->info("No pilot.ini provided as command line parameter\ne.g.uhfRadio d:\\BMS\\User\\Config\\Viper.ini\n");
+    strncpy(pFilePath, m_sFileName.c_str(), m_sFileName.size());
+    Log::getInstance()->info("No pilot.ini provided as command line parameter\r\ne.g. uhfRadio d:\\BMS\\User\\Config\\Viper.ini\r\n");
   }
   // ask command line argument
   printf("Reading %s\n",pFilePath);
@@ -59,7 +59,7 @@ uint8_t readLogbookFrequencies(char *pFilePath) {
 #endif
     }
   } else {
-    Log::getInstance()->error("failed to open file");
+    Log::getInstance()->error("failed to open file\n");
     delete pLineBuffer;
     return ERROR_FILE_NOT_FOUND;
   }
@@ -89,9 +89,11 @@ uint32_t sendUhfPresetFrequencies(CAppSerial *pAppSerial) {
 	    } else {
 	      value[1] |= 0xEE00;
 	      iRetVal = pAppSerial->sendData(value);
-	      printf("%d\t", iRetVal);
+#if _DEBUG_ > 0
+	      printf("\t%d", iRetVal);
+#endif
 	    }
-	    sleep(1);
+	    Sleep(500); /* wait 500ms */
   }
 
   return iRetVal;

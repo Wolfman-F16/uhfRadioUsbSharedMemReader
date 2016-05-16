@@ -92,8 +92,9 @@ int32_t convert(uint16_t pBuffer[2], uint32_t pFreq, uint32_t pChan) {
   }
   pBuffer[1] |= pChan & 0x001F;
 
-  printf("\nConverting %d to %d %d %d %d %d = %04x %04x\r", pFreq, dig1, dig2,
+#if _DEBUG_ > 0
+  printf("\r\nConverting %d to %d %d %d %d %d = %04x %04x", pFreq, dig1, dig2,
       dig3, dig4, dig5, pBuffer[0], pBuffer[1]);
-
+#endif
   return 0;
 }

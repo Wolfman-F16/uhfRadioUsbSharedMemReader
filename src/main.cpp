@@ -75,17 +75,17 @@ int main(int argc, char **argv) {
     return ERROR_CONFIG;
   }
   if (argc != 2) {
-    printf("no path to pilot.ini provided");
+    printf("no path to pilot.ini provided.\n");
   } else {
     if(readLogbookFrequencies(argv[1])) {
-      Log::getInstance()->debug("unable to read UHF Preset frequencies\n");
+      Log::getInstance()->debug("unable to read UHF Preset frequencies.\n");
     } else {
       sendUhfPresetFrequencies(&m_pAppSerial);
     }
   }
   if (m_pAppFalcon.InitInstance() != TRUE)
   {
-    Log::getInstance()->debug("could not initialize application\n");
+    Log::getInstance()->debug("could not initialize application.\n");
     return ERROR_DATA;
   }
 
