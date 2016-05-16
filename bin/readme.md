@@ -8,11 +8,14 @@ from gcc
 0. libstdc++-6.dll 
 0. libwinpthread-1.dll
 
-from libusb-win32 (http://sourceforge.net/projects/libusb-win32/)
+from libusb-win32 
 
 0. libusb.dll
 
+
 To be able to interface with the UHF Radio, a filter driver must be installed.
-choose the appropriate architecture (`/amd64` for 64bit windows versions) and run the following command (or use the install-filter-win GUI)
-`
-install-filter install --device=USBVid_16c0.Pid_27db.Rev_0100`
+
+0. Get the USB driver software at `http://sourceforge.net/projects/libusb-win32/`
+0. choose the appropriate architecture (`/amd64` for 64bit windows versions) 
+0. and run the following command (or use the install-filter-win GUI)
+`install-filter install --device=USBVid_16c0.Pid_27db.Rev_0100`
