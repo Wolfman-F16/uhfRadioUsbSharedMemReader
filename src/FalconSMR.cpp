@@ -97,6 +97,9 @@ uint32_t FalconSMR::initF4(void) {
       case FALCON_BMS_433_VERSION:
         printf("Detected BMS 4.33\n");
         break;
+      case FALCON_BMS_435_VERSION:
+        printf("Detected BMS 4.35\n");
+        break;
       default:
         printf("Falcon 4.0 not running\n");
         errVal = -1;
