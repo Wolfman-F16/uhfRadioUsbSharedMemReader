@@ -67,7 +67,7 @@ int main(int argc, char **argv) {
   uint32_t retVal;
 
   printf(
-      "Falcon 4.0 / BMS 4.33 Shared Memory Reader\n\rARC-164 UHF Radio - %s %s\n\r",
+      "Falcon 4.0 / BMS 4.35 Shared Memory Reader\n\rARC-164 UHF Radio - %s %s\n\r",
       __DATE__, __TIME__);
   if (m_pAppSerial.setup() != TRUE)
   {

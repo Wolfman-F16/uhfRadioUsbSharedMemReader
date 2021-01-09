@@ -169,7 +169,7 @@ int32_t FalconSMR::sync() {
     Log::getInstance()->debug("shared memory not ready\n");
     return status;
   }
-
+  status = ERROR_UNKNOWN_PRODUCT;
   if (flightDataF4->iFalconVersion == FALCON_BMS_432_VERSION) {
     if (createBms() == NULL) {
       destroyBms();
@@ -177,10 +177,10 @@ int32_t FalconSMR::sync() {
           "error creating BMS 4.32 shared memory mapping\n");
       return ERROR_DATA;
     } else {
+      Log::getInstance()->debug("BMS 4.32 detected\n");
       status = initBms();
     }
   }
-
   if (flightDataF4->iFalconVersion == FALCON_BMS_433_VERSION) {
     if (createBms() == NULL) {
       destroyBms();
@@ -188,8 +188,21 @@ int32_t FalconSMR::sync() {
           "error creating BMS 4.33 shared memory mapping\n");
       return ERROR_DATA;
     } else {
+      Log::getInstance()->debug("BMS 4.33 detected\n");
       status = initBms();
     }
   }
+  if (flightDataF4->iFalconVersion == FALCON_BMS_435_VERSION) {
+    if (createBms() == NULL) {
+      destroyBms();
+      Log::getInstance()->debug(
+          "error creating BMS 4.35 shared memory mapping\n");
+      return ERROR_DATA;
+    } else {
+      Log::getInstance()->debug("BMS 4.35 detected\n");
+      status = initBms();
+    }
+  }
+
   return status;
 }
